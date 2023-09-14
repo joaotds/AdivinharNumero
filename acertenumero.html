@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adivinhe o Número</title>
+    <style>
+        body {
+        background-color: #910000;
+        color: #000000;
+        font-style: oblique;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        }
+        .enviar {
+	    display: block;
+	    margin: 0 0 20px;
+	    padding: 10px 25px;
+	    width: 250px;
+	    position: relative;
+	    margin: 0 auto;
+	    background-color: #ffffff; 
+        color: #000000; 
+        border: 2px solid #000; 
+        border-radius: 30px; 
+        padding: 10px 20px; 
+        font-size: 16px; 
+        cursor: pointer; 
+        transition: background-color 0.3s, color 0.3s; 
+        }
+
+        .enviar:hover {
+    	background: rgb(255, 0, 0);
+    	transform: scale(1.2);
+        }
+
+        .caixa {
+	    width: 400px;
+	    margin: 0 auto;
+	    background-color: #ff0000; 
+        color: #000; 
+        border: 3px solid #000; 
+        border-radius: 30px; 
+        padding: 10px 20px; 
+        font-size: 60px; 
+        cursor: pointer; 
+        }
+        .caixamini {
+	    width: 340px;
+	    margin: 0 auto;
+	    background-color: #ff0000; 
+        color: #000; 
+        border: 2px solid #000; 
+        border-radius: 30px; 
+        padding: 10px 20px; 
+        font-size: 16px; 
+        cursor: pointer;
+}
+    </style>
+</head>
+<body>
+    <h1 class=caixa >Adivinhe o Número</h1>
+    <p class=caixamini>Tente adivinhar o número entre 1 e 100.</p>
+    <p> </p>
+    <input class=enviar type="number" id="digitado" placeholder="Digite um número">  <!--botão que pega o valor digitado e armazena no id -->
+    <p> </p>
+    <button class=enviar onclick="checkGuess()">Adivinhar</button> <!--botão que ao clicado executa a função que verifica se acertou ou não-->
+    <p> </p>
+    <p class=caixamini id="mensagem">Tente Adivinhar qual numero eu escolhi</p> <!--cria uma caixa de texto com um id que determinara o que sera escrito apos a tentativa-->
+    
+    <script>
+        // Gerar um número aleatório entre 1 e 100 e armazena na variavel "numeroAleatorio"
+        const numeroAleatorio = Math.floor(Math.random() * 100) + 1;
+        
+        let tentativas = 0; // Contador de tentativas, criei uma variavel que vai aumentar a cada vez que o usuario inserir um numero entre 1 e 100
+        
+        function checkGuess() { //função criada
+            const adivinhar = parseInt(document.getElementById("digitado").value); //pega o valor digitado pelo usuario, transforma em int e armazena
+            const mensagemPassada = document.getElementById("mensagem"); //cria a variavel mensagemPassada e armazena o id
+
+            if (isNaN(adivinhar) || adivinhar < 1 || adivinhar > 100) { //se o numero for maior que 100 ou menor que um avise o usuario para por outro numero
+                messageElement.textContent = "Por favor, digite um número válido entre 1 e 100."; //o programa tambem verifica se o valor digitado é um numero, se o valor for NaN (not a number = não é um numero) ele informa o usuario a escolher um valor em numero
+            } else {
+                tentativas++; // adiciona mais uma tentativa no numero de tentativas
+
+                if (adivinhar === numeroAleatorio) { //se o numero que o usuario digitou for igual a o numero sorteado
+                    mensagemPassada.textContent = `Parabéns! Você acertou o número ${numeroAleatorio} em ${tentativas} tentativas.`; //exibe essa mensagem
+                } else if (adivinhar < numeroAleatorio) { //se não for igual e for menor que o numero sorteado
+                    mensagemPassada.textContent = `O número é maior do que ${adivinhar}. Tente novamente.`; //exibe essa mensagem
+                } else { //se for o contrario da condição passada(maior que o numero sorteado)
+                    mensagemPassada.textContent = `O número é menor do que ${adivinhar}. Tente novamente.`; //exibe essa mensagem
+                }
+            }
+        }
+    </script>
+</body>
+</html>
