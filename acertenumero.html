@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adivinhe o Número</title>
-    <style>
+    <title>Quiz</title>
+</head>
+
+ <style>
         body {
-        background-color: #910000;
-        background-image: url("https://clipart-library.com/images/6cyogBnoi.png");
+        background-color: #007a00;
+        background-image: url("https://img.freepik.com/free-vector/seamless-green-grass-pattern_1284-52275.jpg");
         background-repeat: repeat;
         color: #000000;
         font-style: oblique;
@@ -21,7 +21,7 @@
 	    width: 250px;
 	    position: relative;
 	    margin: 0 auto;
-	    background-color: #b10000; 
+	    background-color: #ffffff; 
         color: #000000; 
         border: 2px solid #000; 
         border-radius: 30px; 
@@ -32,15 +32,15 @@
         }
 
         .enviar:hover {
-    	background: rgb(255, 0, 0);
-        color: rgb(0, 0, 0);
     	transform: scale(1.2);
+        background-image: url(https://i.pinimg.com/originals/19/2a/45/192a45cea9d9fae32c636fab9d2bcced.jpg);
         }
 
         .caixa {
+        background-image: url(https://i.pinimg.com/originals/19/2a/45/192a45cea9d9fae32c636fab9d2bcced.jpg);
 	    width: 400px;
 	    margin: 0 auto;
-	    background-color: #a80000; 
+	    background-color: #7ddd85; 
         color: #000; 
         border: 3px solid #000; 
         border-radius: 30px; 
@@ -51,7 +51,7 @@
         .caixamini {
 	    width: 340px;
 	    margin: 0 auto;
-	    background-color: #b90000; 
+	    background-color: #67cc64; 
         color: #000; 
         border: 2px solid #000; 
         border-radius: 30px; 
@@ -60,41 +60,80 @@
         cursor: pointer;
 }
     </style>
-</head>
+
 <body>
-    <h1 class=caixa >Adivinhe o Número</h1>
-    <p class=caixamini>Tente adivinhar o número entre 1 e 100.</p>
-    <p> </p>
-    <input class=enviar type="number" id="digitado" placeholder="Digite um número">  <!--botão que pega o valor digitado e armazena no id -->
-    <p> </p>
-    <button class=enviar onclick="checkGuess()">Adivinhar</button> <!--botão que ao clicado executa a função que verifica se acertou ou não-->
-    <p> </p>
-    <p class=caixamini id="mensagem">Tente Adivinhar qual numero eu escolhi</p> <!--cria uma caixa de texto com um id que determinara o que sera escrito apos a tentativa-->
-    
+    <h1 class="caixa">Quiz</h1>
+    <div id="quiz">
+        <p id="question" class="caixamini"></p>
+        <input type="text" id="answer" class="caixa">
+        <button id="submit" class="enviar">Enviar</button>
+        <p>
+        </p>
+        <img id="image" class="caixa" src="">
+    </div>
+
     <script>
-        // Gerar um número aleatório entre 1 e 100 e armazena na variavel "numeroAleatorio"
-        const numeroAleatorio = Math.floor(Math.random() * 100) + 1;
-        
-        let tentativas = 0; // Contador de tentativas, criei uma variavel que vai aumentar a cada vez que o usuario inserir um numero entre 1 e 100
-        
-        function checkGuess() { //função criada
-            const adivinhar = parseInt(document.getElementById("digitado").value); //pega o valor digitado pelo usuario, transforma em int e armazena
-            const mensagemPassada = document.getElementById("mensagem"); //cria a variavel mensagemPassada e armazena o id
 
-            if (isNaN(adivinhar) || adivinhar < 1 || adivinhar > 100) { //se o numero for maior que 100 ou menor que um avise o usuario para por outro numero
-                messageElement.textContent = "Por favor, digite um número válido entre 1 e 100."; //o programa tambem verifica se o valor digitado é um numero, se o valor for NaN (not a number = não é um numero) ele informa o usuario a escolher um valor em numero
-            } else {
-                tentativas++; // adiciona mais uma tentativa no numero de tentativas
+    function trocarImagem() {
 
-                if (adivinhar === numeroAleatorio) { //se o numero que o usuario digitou for igual a o numero sorteado
-                    mensagemPassada.textContent = `Parabéns! Você acertou o número ${numeroAleatorio} em ${tentativas} tentativas.`; //exibe essa mensagem
-                } else if (adivinhar < numeroAleatorio) { //se não for igual e for menor que o numero sorteado
-                    mensagemPassada.textContent = `O número é maior do que ${adivinhar}. Tente novamente.`; //exibe essa mensagem
-                } else { //se for o contrario da condição passada(maior que o numero sorteado)
-                    mensagemPassada.textContent = `O número é menor do que ${adivinhar}. Tente novamente.`; //exibe essa mensagem
+
+    }
+    
+
+        const questions = [
+            { question: "Pergunta 1", answer: "resposta1", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Eo_circle_red_number-1.svg/2048px-Eo_circle_red_number-1.svg.png" },
+            { question: "Pergunta 2", answer: "resposta2", image: "https://cdn-icons-png.flaticon.com/512/6947/6947566.png" },
+            { question: "", answer: "", image: ""},
+            { question: "", answer: "", image: ""},
+            { question: "", answer: "", image: ""},
+            { question: "", answer: "", image: ""},
+            { question: "", answer: "", image: ""},
+            { question: "", answer: "", image: ""},
+            { question: "", answer: "", image: ""},
+            { question: "", answer: "", image: ""},
+        ];
+
+        let currentQuestion = 0;
+
+        const questionElement = document.getElementById("question");
+        const answerElement = document.getElementById("answer");
+        const submitButton = document.getElementById("submit");
+        const imageElement = document.getElementById("image");
+
+        function showQuestion() {
+            questionElement.textContent = questions[currentQuestion].question;
+            imageElement.src = questions[currentQuestion].image;
+        }
+
+        function checkAnswer() {
+            const userAnswer = answerElement.value;
+            const correctAnswer = questions[currentQuestion].answer;
+
+            if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+                if (currentQuestion < questions.length - 1) {
+                    currentQuestion++;
+                    showQuestion();
+                    answerElement.value = "";
+                } else {
+                    alert("Parabéns! Você acertou todas as perguntas.");
+                    resetQuiz();
                 }
+            } else {
+                alert("Resposta incorreta. Tente novamente.");
+                currentQuestion = 0;
+                showQuestion();
+                answerElement.value = "";
             }
         }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            showQuestion();
+            answerElement.value = "";
+        }
+
+        showQuestion();
+        submitButton.addEventListener("click", checkAnswer);
     </script>
 </body>
 </html>
